@@ -18,7 +18,7 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class SampleDB {
+public class SampleDb {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
