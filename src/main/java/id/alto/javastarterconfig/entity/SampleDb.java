@@ -1,5 +1,6 @@
 package id.alto.javastarterconfig.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,6 +18,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@JsonIgnoreProperties(value = {"id"}, allowGetters = true)
 public class SampleDb {
     @Id
     @Column(length = 36, columnDefinition = "varchar(36)", updatable = false, nullable = false)

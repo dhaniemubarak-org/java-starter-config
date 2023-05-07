@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -47,6 +48,21 @@ class SampleDbServiceImplTest {
         SampleDb sampleDbCaptureValue = sampleDbArgumentCaptor.getValue();
         assertEquals(sampleDb, sampleDbCaptureValue);
     }
+
+    @Test
+    void itShouldCreateSampleDbTestWhenIdIsNull() {
+        String phoneNumber = "08888";
+        SampleDb sampleDb = new SampleDb(null, "Alto", phoneNumber, Timestamp.valueOf(LocalDateTime.now()), Timestamp.valueOf(LocalDateTime.now()));
+        given(sampleDbRepository.findByPhoneNumber(phoneNumber)).willReturn(Optional.empty());
+        underTest.createSampleDb(sampleDb);
+        then(sampleDbRepository).should().save(sampleDbArgumentCaptor.capture());
+        SampleDb sampleDbCaptureValue = sampleDbArgumentCaptor.getValue();
+        assertThat(sampleDbCaptureValue).usingRecursiveComparison()
+                .ignoringFields("id").isEqualTo(sampleDb);
+        assertEquals(sampleDb, sampleDbCaptureValue);
+        assertNotNull(sampleDbCaptureValue.getId());
+    }
+
 
     @Test
     void itShouldNotCreateSampleDbTest() {

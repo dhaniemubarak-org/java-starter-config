@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
@@ -22,6 +23,9 @@ public class SampleDbServiceImpl implements SampleDbService {
                 return sampleDb;
             }
             throw new IllegalStateException(String.format("Phone number [%s] is taken", request.getPhoneNumber()));
+        }
+        if (request.getId() == null) {
+            request.setId(UUID.randomUUID());
         }
         return sampleDbRepository.save(request);
     }
