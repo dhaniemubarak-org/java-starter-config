@@ -25,6 +25,9 @@ public class SampleDb {
 
     private String name;
 
+    @Column(nullable = false, unique = true)
+    private String phoneNumber;
+
     @CreationTimestamp
     private Timestamp createdAt;
 
